@@ -6,13 +6,14 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.testng.annotations.Test;
 
+import java.io.IOException;
 import java.util.*;
 
 public class TC_HomePage_001 extends BaseClass {
     ReadProperties readProperties = new ReadProperties();
 
     @Test
-    public void searchPage() {
+    public void searchPage() throws IOException {
 
         driver.get(readProperties.getApplicationUrl());
 
@@ -23,7 +24,7 @@ public class TC_HomePage_001 extends BaseClass {
         List<WebElement> productsList = driver.findElements(By.xpath(readProperties.ListOfProducts()));
         List<WebElement> pricesList = driver.findElements(By.xpath(readProperties.ListOfPrices()));
 
-        checkDisplayedProducts(productsList);
+        checkDisplayedProducts(productsList,readProperties.searchContent());
 
         //Use of HashMap to store Products and Their prices(after conversion to Integer)
         HashMap<Integer, String> map_final_products = new HashMap<Integer, String>();
