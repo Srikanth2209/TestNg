@@ -7,27 +7,41 @@ import org.openqa.selenium.support.PageFactory;
 
 public class SearchPage
 {
-    WebDriver ldriver;
-
-    public SearchPage(WebDriver rdriver)
+    WebDriver driver;
+    public SearchPage(WebDriver driver)
     {
-        ldriver=rdriver;
-        PageFactory.initElements(rdriver,this);
+        this.driver=driver;
+        PageFactory.initElements(driver,this);
     }
-
     @FindBy(xpath="//input[@id='search_query_top']")
-    WebElement searchContent;
+    WebElement searchBox;
 
     @FindBy(xpath = "//button[@name='submit_search']")
     WebElement searchButton;
 
+    public boolean isElementsPresent( WebElement element)
+    {
+        if(element.isDisplayed()){
+            return true;
+        }else {
+            return false;
+        }
+    }
     public void setContent(String uname)
     {
-        searchContent.sendKeys(uname);
+        if(isElementsPresent(searchBox)){
+            searchBox.sendKeys(uname);
+        }else{
+            System.out.println("searchBox not present");
+        }
     }
     public  void clickSearchButton()
     {
+        if(isElementsPresent(searchButton)){
         searchButton.click();
+        }else{
+            System.out.println("searchButton not present ");
+        }
     }
 }
 

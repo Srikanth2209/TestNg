@@ -5,7 +5,6 @@ import com.yourslogo.utilites.ReadProperties;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.testng.annotations.Test;
-
 import java.io.IOException;
 import java.util.*;
 
@@ -14,35 +13,34 @@ public class TC_HomePage_001 extends BaseClass {
 
     @Test
     public void searchPage() throws IOException {
-
         driver.get(readProperties.getApplicationUrl());
-
+        logger.info("chrome invoked and navigated to url");
         SearchPage sp = new SearchPage(driver);
         sp.setContent(readProperties.searchContent());
         sp.clickSearchButton();
+        logger.info("product search success");
 
-        List<WebElement> productsList = driver.findElements(By.xpath(readProperties.ListOfProducts()));
-        List<WebElement> pricesList = driver.findElements(By.xpath(readProperties.ListOfPrices()));
+        List<WebElement> productsList = driver.findElements(By.xpath(readProperties.listOfProducts()));
+        List<WebElement> pricesList = driver.findElements(By.xpath(readProperties.listOfPrices()));
 
         checkDisplayedProducts(productsList,readProperties.searchContent());
+        logger.info("searched and displayed products are compared");
 
-        //Use of HashMap to store Products and Their prices(after conversion to Integer)
-        HashMap<Integer, String> map_final_products = new HashMap<Integer, String>();
+        HashMap<Double, String> map = new HashMap<Double, String>();
         for (int i = 0; i < productsList.size(); i++) {
             String product_name = productsList.get(i).getText();
             String product_price = pricesList.get(i).getText();
-            String updated_price = product_price.replaceAll("[^0-9]", "");
-            int product_price_integer = Integer.parseInt(updated_price);
-            map_final_products.put(product_price_integer, product_name);
+            String updated_price = product_price.replace("$", "");
+            Double product_price_integer = Double.parseDouble(updated_price);
+            map.put(product_price_integer, product_name);
         }
-
-        Set<Integer> keys = map_final_products.keySet();
-        ArrayList<Integer> sorted_Prices = new ArrayList<Integer>(keys);
-
+        logger.info("product_price and product_names are pushed to HashMap");
+        Set<Double> keys = map.keySet();
+        ArrayList<Double> sorted_Prices = new ArrayList<Double>(keys);
         Collections.sort(sorted_Prices);
-
-        int low_price = sorted_Prices.get(0);
-        System.out.println("Low Product Price is: " + low_price + " Product name is: " + map_final_products.get(low_price));
+        Double low_price = sorted_Prices.get(0);
+        System.out.println("Low Product Price is: " + low_price + " Product name is: " + map.get(low_price));
+        logger.info("lowest product price and correspondent product details are extracted");
     }
 }
 

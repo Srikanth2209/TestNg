@@ -143,4 +143,9 @@ public class XLUtility
 
     }//File screenshot = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
                    // FileUtils.copyFile(screenshot, new File("D:\\Training\\FailedTestScriptScreenshot\\" + sheet.getCell(0, i).getContents() + ".png"));
-}
+}//div[@class='right-block']/child::span/child::span
+
+
+//String UserDir = System.getProperty("user.dir");
+//String pathSeparator = System.getProperty("file.separator");
+//String file_path = UserDir+pathSeparator+"src"+pathSeparator+"main"+pathSeparator+"resources"+pathSeparator+"testdata2.xls";

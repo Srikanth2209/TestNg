@@ -10,7 +10,9 @@ public class ReadProperties
     Properties properties;
     public ReadProperties()
     {
-        File src = new File("./Configuration/yourslogo.properties");
+        String UserDir = System.getProperty("user.dir");
+        String pathSeparator = System.getProperty("file.separator");
+        File src = new File(UserDir+pathSeparator+"Configuration"+pathSeparator+"yourslogo.properties");
         properties= new Properties();
         try {
             properties.load(new FileInputStream(src));
@@ -28,12 +30,12 @@ public class ReadProperties
         String search = properties.getProperty("searchContent");
         return search;
     }
-    public String ListOfProducts()
+    public String listOfProducts()
     {
         String proList = properties.getProperty("productsListXpath");
         return proList;
     }
-    public String ListOfPrices()
+    public String listOfPrices()
     {
         String proPrices = properties.getProperty("pricesList");
         return proPrices;
